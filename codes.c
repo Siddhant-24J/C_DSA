@@ -4366,3 +4366,230 @@ int main() {
 }
 
 #endif  // End of Question 41
+
+
+// ============================================================================
+// QUESTION 42: Recursive Tree Traversals and Tree Functions
+// Menu: Insert, Inorder Traversal, Preorder Traversal, Postorder Traversal,
+//       Mirror Image, Count Nodes, Height of Tree, Exit
+// ============================================================================
+
+#if 0  // Change to #if 1 to enable this solution
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+struct Node* insert(struct Node* root, int data) {
+    if (root == NULL) {
+        return createNode(data);
+    }
+    if (data < root->data) {
+        root->left = insert(root->left, data);
+    } else if (data > root->data) {
+        root->right = insert(root->right, data);
+    }
+    return root;
+}
+
+void inorderTraversal(struct Node* root) {
+    if (root != NULL) {
+        inorderTraversal(root->left);
+        printf("%d ", root->data);
+        inorderTraversal(root->right);
+    }
+}
+
+void preorderTraversal(struct Node* root) {
+    if (root != NULL) {
+        printf("%d ", root->data);
+        preorderTraversal(root->left);
+        preorderTraversal(root->right);
+    }
+}
+
+void postorderTraversal(struct Node* root) {
+    if (root != NULL) {
+        postorderTraversal(root->left);
+        postorderTraversal(root->right);
+        printf("%d ", root->data);
+    }
+}
+
+struct Node* mirrorImage(struct Node* root) {
+    if (root == NULL) {
+        return NULL;
+    }
+    
+    struct Node* temp = root->left;
+    root->left = mirrorImage(root->right);
+    root->right = mirrorImage(temp);
+    
+    return root;
+}
+
+int countNodes(struct Node* root) {
+    if (root == NULL) {
+        return 0;
+    }
+    return 1 + countNodes(root->left) + countNodes(root->right);
+}
+
+int height(struct Node* root) {
+    if (root == NULL) {
+        return -1;
+    }
+    int leftHeight = height(root->left);
+    int rightHeight = height(root->right);
+    return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+}
+
+int countLeafNodes(struct Node* root) {
+    if (root == NULL) {
+        return 0;
+    }
+    if (root->left == NULL && root->right == NULL) {
+        return 1;
+    }
+    return countLeafNodes(root->left) + countLeafNodes(root->right);
+}
+
+int countInternalNodes(struct Node* root) {
+    if (root == NULL || (root->left == NULL && root->right == NULL)) {
+        return 0;
+    }
+    return 1 + countInternalNodes(root->left) + countInternalNodes(root->right);
+}
+
+int maxValue(struct Node* root) {
+    if (root == NULL) {
+        return -1;
+    }
+    while (root->right != NULL) {
+        root = root->right;
+    }
+    return root->data;
+}
+
+int minValue(struct Node* root) {
+    if (root == NULL) {
+        return -1;
+    }
+    while (root->left != NULL) {
+        root = root->left;
+    }
+    return root->data;
+}
+
+int main() {
+    struct Node* root = NULL;
+    int choice, data;
+    
+    while (1) {
+        printf("\n========== TREE OPERATIONS ==========\n");
+        printf("1. Insert Node\n");
+        printf("2. Inorder Traversal (Recursive)\n");
+        printf("3. Preorder Traversal (Recursive)\n");
+        printf("4. Postorder Traversal (Recursive)\n");
+        printf("5. Mirror Image\n");
+        printf("6. Count Nodes\n");
+        printf("7. Height of Tree\n");
+        printf("8. Count Leaf Nodes\n");
+        printf("9. Count Internal Nodes\n");
+        printf("10. Maximum Value\n");
+        printf("11. Minimum Value\n");
+        printf("12. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        
+        switch (choice) {
+            case 1:
+                printf("Enter data to insert: ");
+                scanf("%d", &data);
+                root = insert(root, data);
+                printf("Node inserted successfully.\n");
+                break;
+            case 2:
+                if (root == NULL) {
+                    printf("Tree is empty.\n");
+                } else {
+                    printf("Inorder Traversal: ");
+                    inorderTraversal(root);
+                    printf("\n");
+                }
+                break;
+            case 3:
+                if (root == NULL) {
+                    printf("Tree is empty.\n");
+                } else {
+                    printf("Preorder Traversal: ");
+                    preorderTraversal(root);
+                    printf("\n");
+                }
+                break;
+            case 4:
+                if (root == NULL) {
+                    printf("Tree is empty.\n");
+                } else {
+                    printf("Postorder Traversal: ");
+                    postorderTraversal(root);
+                    printf("\n");
+                }
+                break;
+            case 5:
+                if (root == NULL) {
+                    printf("Tree is empty.\n");
+                } else {
+                    root = mirrorImage(root);
+                    printf("Tree mirrored successfully.\n");
+                }
+                break;
+            case 6:
+                printf("Total nodes: %d\n", countNodes(root));
+                break;
+            case 7:
+                printf("Height of tree: %d\n", height(root));
+                break;
+            case 8:
+                printf("Leaf nodes: %d\n", countLeafNodes(root));
+                break;
+            case 9:
+                printf("Internal nodes: %d\n", countInternalNodes(root));
+                break;
+            case 10:
+                if (root == NULL) {
+                    printf("Tree is empty.\n");
+                } else {
+                    printf("Maximum value: %d\n", maxValue(root));
+                }
+                break;
+            case 11:
+                if (root == NULL) {
+                    printf("Tree is empty.\n");
+                } else {
+                    printf("Minimum value: %d\n", minValue(root));
+                }
+                break;
+            case 12:
+                exit(0);
+            default:
+                printf("Invalid choice.\n");
+        }
+    }
+    return 0;
+}
+
+#endif  // End of Question 42
