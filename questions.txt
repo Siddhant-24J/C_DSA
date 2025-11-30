@@ -1,0 +1,99 @@
+✅ 1. TREE & BST BASED QUESTIONS
+🔹 Basic BST Insert & Traversal
+
+BST – Insert + Preorder (Non-recursive)
+
+BST – Insert + Inorder (Non-recursive)
+
+BST – Insert + Postorder (Non-recursive)
+
+🔹 BST with Delete & Traversal
+
+BST – Delete + Preorder (Non-recursive)
+
+BST – Delete + Inorder (Non-recursive)
+
+BST – Delete + Postorder (Non-recursive)
+
+🔹 BST with Extra Operations
+
+BST – Insert, Count Nodes, Display
+
+BST – Insert, Mirror Image, Display
+
+BST – Insert, Height of Tree, Display
+
+BST – Delete, Count Nodes, Exit
+
+🔹 Balanced Tree
+
+AVL Tree – Insert, Display, Exit
+
+✅ 2. SORTING & SEARCHING
+
+Merge Sort – Read, Sort, Display
+
+Binary Search (with any sorting method)
+
+✅ 3. HASHING TECHNIQUES
+
+Cuckoo Hashing
+
+Hashing – Linear Probing, Modulo 11, 2 Slot
+
+Hashing – Linear Probing, Modulo 12, 3 Slot
+
+✅ 4. STACK & EXPRESSION CONVERSION
+
+Matching Parenthesis
+
+Infix to Postfix
+
+Postfix to Infix
+
+Reverse Stack using Queue
+
+✅ 5. QUEUE
+
+Circular Queue – Insert, Delete, Display
+
+✅ 6. GRAPH ALGORITHMS & TRAVERSAL
+🔹 Graph Traversal
+
+Graph – Read, BFS, Exit
+
+Graph – Read, DFS, Exit
+
+BFS on Graph
+
+DFS on Graph
+
+🔹 Shortest Path
+
+Dijkstra’s Algorithm
+
+Dijkstra’s Algorithm
+
+✅ 7. SINGLY LINKED LIST
+
+Insert Front, Delete Front, Display
+
+Insert End, Delete End, Display
+
+Insert Front, Delete at Given Position, Display
+
+✅ 8. DOUBLY LINKED LIST (Full Group)
+
+DLL – Insert, Find Even Nodes
+
+DLL – Swap First & Last Node
+
+DLL – Insert Front, Delete End
+
+DLL – Insert End, Delete Front
+
+DLL – Insert Front, Delete Even Nodes
+
+DLL – Insert End, Delete Odd Nodes
+
+DLL – Insert Front, Delete Nodes Divisible by 3
