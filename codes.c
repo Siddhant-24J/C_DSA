@@ -4059,3 +4059,310 @@ int main() {
 
 #endif  // End of Question 40
 // ============================================================================
+
+
+// ============================================================================
+// QUESTION 41: Sorting + Searching
+// Menu: Read Array, Insertion Sort, Bubble Sort, Merge Sort, Quick Sort,
+//       Binary Search, Fibonacci Search, Exit
+// ============================================================================
+
+#if 0  // Change to #if 1 to enable this solution
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+int arr[MAX];
+int n = 0;
+
+void readArray() {
+    int i;
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+    printf("Enter elements: ");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    printf("Array read successfully.\n");
+}
+
+void displayArray() {
+    int i;
+    if (n == 0) {
+        printf("Array is empty.\n");
+        return;
+    }
+    printf("Array: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+void insertionSort() {
+    if (n == 0) {
+        printf("Please read array first.\n");
+        return;
+    }
+    int i, key, j;
+    for (i = 1; i < n; i++) {
+        key = arr[i];
+        j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+    printf("Array sorted using Insertion Sort.\n");
+}
+
+void bubbleSort() {
+    if (n == 0) {
+        printf("Please read array first.\n");
+        return;
+    }
+    int i, j, temp;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    printf("Array sorted using Bubble Sort.\n");
+}
+
+void merge(int arr[], int left, int mid, int right) {
+    int i, j, k;
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    
+    int L[n1], R[n2];
+    
+    for (i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+    
+    i = 0;
+    j = 0;
+    k = left;
+    
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+    
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSortHelper(int arr[], int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        mergeSortHelper(arr, left, mid);
+        mergeSortHelper(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
+void mergeSort() {
+    if (n == 0) {
+        printf("Please read array first.\n");
+        return;
+    }
+    mergeSortHelper(arr, 0, n - 1);
+    printf("Array sorted using Merge Sort.\n");
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    int j, temp;
+    
+    for (j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+    return (i + 1);
+}
+
+void quickSortHelper(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSortHelper(arr, low, pi - 1);
+        quickSortHelper(arr, pi + 1, high);
+    }
+}
+
+void quickSort() {
+    if (n == 0) {
+        printf("Please read array first.\n");
+        return;
+    }
+    quickSortHelper(arr, 0, n - 1);
+    printf("Array sorted using Quick Sort.\n");
+}
+
+int binarySearch(int key) {
+    if (n == 0) {
+        printf("Array is empty.\n");
+        return -1;
+    }
+    int left = 0, right = n - 1, mid;
+    
+    while (left <= right) {
+        mid = left + (right - left) / 2;
+        
+        if (arr[mid] == key) {
+            return mid;
+        }
+        
+        if (arr[mid] < key) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return -1;
+}
+
+int min(int x, int y) {
+    return (x <= y) ? x : y;
+}
+
+int fibonacciSearch(int key) {
+    if (n == 0) {
+        printf("Array is empty.\n");
+        return -1;
+    }
+    
+    int fibMMm2 = 0;
+    int fibMMm1 = 1;
+    int fibM = fibMMm2 + fibMMm1;
+    
+    while (fibM < n) {
+        fibMMm2 = fibMMm1;
+        fibMMm1 = fibM;
+        fibM = fibMMm2 + fibMMm1;
+    }
+    
+    int offset = -1;
+    
+    while (fibM > 1) {
+        int i = min(offset + fibMMm2, n - 1);
+        
+        if (arr[i] < key) {
+            fibM = fibMMm1;
+            fibMMm1 = fibMMm2;
+            fibMMm2 = fibM - fibMMm1;
+            offset = i;
+        } else if (arr[i] > key) {
+            fibM = fibMMm2;
+            fibMMm1 = fibMMm1 - fibMMm2;
+            fibMMm2 = fibM - fibMMm1;
+        } else {
+            return i;
+        }
+    }
+    
+    if (fibMMm1 && arr[offset + 1] == key) {
+        return offset + 1;
+    }
+    
+    return -1;
+}
+
+int main() {
+    int choice, key, result;
+    
+    while (1) {
+        printf("\n========== MENU ==========\n");
+        printf("1. Read Array\n");
+        printf("2. Display Array\n");
+        printf("3. Insertion Sort\n");
+        printf("4. Bubble Sort\n");
+        printf("5. Merge Sort\n");
+        printf("6. Quick Sort\n");
+        printf("7. Binary Search\n");
+        printf("8. Fibonacci Search\n");
+        printf("9. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        
+        switch (choice) {
+            case 1:
+                readArray();
+                break;
+            case 2:
+                displayArray();
+                break;
+            case 3:
+                insertionSort();
+                break;
+            case 4:
+                bubbleSort();
+                break;
+            case 5:
+                mergeSort();
+                break;
+            case 6:
+                quickSort();
+                break;
+            case 7:
+                printf("Enter element to search: ");
+                scanf("%d", &key);
+                result = binarySearch(key);
+                if (result != -1) {
+                    printf("Element found at index %d\n", result);
+                } else {
+                    printf("Element not found. Array must be sorted for binary search.\n");
+                }
+                break;
+            case 8:
+                printf("Enter element to search: ");
+                scanf("%d", &key);
+                result = fibonacciSearch(key);
+                if (result != -1) {
+                    printf("Element found at index %d\n", result);
+                } else {
+                    printf("Element not found. Array must be sorted for fibonacci search.\n");
+                }
+                break;
+            case 9:
+                exit(0);
+            default:
+                printf("Invalid choice.\n");
+        }
+    }
+    return 0;
+}
+
+#endif  // End of Question 41
